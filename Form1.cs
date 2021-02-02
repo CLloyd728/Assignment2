@@ -149,7 +149,7 @@ namespace Assignment2
                 //Seperate on tabs and add to dict of Guilds
                 string[] s = line.Split('\t');
                 string[] s1 = s[1].Split('-');
-                Guilds.Add((Convert.ToUInt32(s[0])), new Guild(s1[0], s1[1]));
+                Guilds.Add((Convert.ToUInt32(s[0])), new Guild(s1[0].Trim(), s1[1].Trim()));
             }
 
             //Read in data from Items file
@@ -175,7 +175,7 @@ namespace Assignment2
                 {
                     ar[i] = Convert.ToUInt32(s[x]);
                 }*/
-                Player player = new Player(Convert.ToUInt32(s[0]), s[1], (Race)Convert.ToUInt32(s[2]),(PlayerClass)Convert.ToUInt32(s[3]), Convert.ToUInt32(s[4]),
+                Player player = new Player(Convert.ToUInt32(s[0]), s[1].Trim(), (Race)Convert.ToUInt32(s[2]),(PlayerClass)Convert.ToUInt32(s[3]), Convert.ToUInt32(s[4]),
                                    Convert.ToUInt32(s[5]), Convert.ToUInt32(s[6]), ar);
                 Players.Add(player.Id, player);
             }
@@ -690,10 +690,10 @@ namespace Assignment2
             InitializeComponent();
             LoadData();
             foreach (KeyValuePair<uint, Guild> pair in Guilds)
-                listBox1.Items.Add(String.Format("{0,-10} {1,-30} {2}", pair.Key, pair.Value.guildName, pair.Value.serverName));
+                listBox1.Items.Add(String.Format("{0:000000}  {1} [{2}]", pair.Key, pair.Value.guildName.PadRight(50 - pair.Value.guildName.Length), pair.Value.serverName));
 
             foreach (KeyValuePair<uint, Player> pair in Players)
-                listBox2.Items.Add(String.Format("{0,-20} {1,-30} {2, 2}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+                listBox2.Items.Add(String.Format("{0} {1} {2,20}", pair.Value.Name.PadRight(32 - (pair.Value.Name).Length), pair.Value.Playerclass, pair.Value.Level));
         }
     }
 }
